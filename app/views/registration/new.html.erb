@@ -1,0 +1,23 @@
+<div class="regis-container">
+    <div class="form-box">
+        <%= tag.div(flash[:alert], class: "alert error") if flash[:alert] %>
+        <%= tag.div(flash[:notice], class: "alert success") if flash[:notice] %>
+        <h2>Registration</h2>
+        <p>Welcome back! Please login to your account</p>
+
+        <%= form_with url: registration_index_path do |form| %>
+        <div>
+            <p>Email</p>
+            <%= form.email_field :email_address, required: false,autofocus: true, autocomplete: "email", placeholder:"Enter your email address", value: params[:email_address], class: "input-field"%>
+        </div>
+        <div>
+            <p>Password</p>
+            <%= form.password_field :password, required: false,autocomplete: "new-password", placeholder: "Create a password", maxlength: 72, class: "input-field" %>
+        </div>
+        <div class="btn-container">
+            <%= link_to "Back", new_session_path, class: "btn-back", role: "button" %>
+            <%= button_to "Register", registration_index_path, method: :post, class: "btn-regis" %>
+        </div>
+
+        <% end %>
+    </div>
