@@ -22,14 +22,16 @@
 
     <div id='messages'>
         <%= turbo_frame_tag 'chat-header' do %>
-        <h2 data-room-target="name"><%= @room_name.blank? ? "Select room" : @room_name %></h2>
+        <h2 data-room-target="name"><%= @room_name.blank? ? "Select Room" : @room_name %></h2>
         <% end %>
 
+        <div class="ConMessage">
         <%= turbo_frame_tag 'room-messages' do %>
         <div id='message-list'>
             <% @messages.each do |message| %>
             <%= render message %>
             <% end %>
+        </div>
         </div>
 
         <% if @room %>

@@ -1,6 +1,6 @@
 <div id="<%= dom_id message %>" class="message">
     <p>
-        <strong><%= message.email %>: <%= message.content %></strong>
+        <strong><%= message.email %>:</strong> <%= message.content %>
     </p>
     <%= button_to 'Delete', message, method: :delete, data: {confirm: 'Are you sure?' } %>
 </div>
