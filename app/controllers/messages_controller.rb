@@ -27,6 +27,7 @@ class MessagesController < ApplicationController
   # POST /messages or /messages.json
   def create
     @message = Message.new(message_params)
+    @message.email = current_user.email_address
 
     respond_to do |format|
       if @message.save
@@ -74,6 +75,6 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.expect(message: [ :content, :room_id ])
+      params.expect(message: [ :content, :room_id, :email ])
     end
 end

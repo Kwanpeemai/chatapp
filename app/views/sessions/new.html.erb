@@ -4,8 +4,8 @@
         <%= tag.div(flash[:alert], class: "alert error") if flash[:alert] %>
         <%= tag.div(flash[:notice], class: "alert success") if flash[:notice] %>
 
-        <h2>Login</h2>
-        <p>Welcome back! Please login to your account</p>
+        <h2>SIGNIN</h2>
+        <p>Welcome back! Please sign in to your account</p>
 
         <%= form_with url: session_path do |form| %>
         <p>Email</p>
@@ -15,11 +15,11 @@
         <div class="forgot-password-container">
             <%= link_to "Forgot password?", new_password_path, class: "forgot-password-link" %>
         </div>
-        <%= form.submit "Sign in", class: "btn-signin" %>
+        <%= form.submit "SIGN IN", class: "btn-signin" %>
 
         <% end %>
+        <p>New User? <%= link_to "Sign up", new_registration_path, class: "forgot-password-link" %></p>
 
-        <div class="divider">or sign in with</div>
-        <%= button_to "Registeration",registration_index_path, method: :Create, class: "btn-register" %>
+
     </div>
 </div>

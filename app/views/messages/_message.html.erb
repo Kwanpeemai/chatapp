@@ -1,4 +1,6 @@
 <div id="<%= dom_id message %>" class="message">
-    <%= message.content %>
+    <p>
+        <strong><%= message.email %>: <%= message.content %></strong>
+    </p>
     <%= button_to 'Delete', message, method: :delete, data: {confirm: 'Are you sure?' } %>
 </div>

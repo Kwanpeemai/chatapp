@@ -3,15 +3,21 @@ class RoomsController < ApplicationController
 
   # GET /rooms or /rooms.json
   def index
+    @email = @current_user.email_address if current_user
     @rooms = Room.all
-
-    @room = @rooms[0] unless @rooms.empty?
+    @room = @rooms[0] unless @rooms.empty? || Room.new(name: "Default Room")
     @messages = []
-    @messages = @room.messages unless @rooms.empty?
+    @messages = @room ? @room.messages : []
+    @room_name = ""
   end
 
   # GET /rooms/1 or /rooms/1.json
   def show
+    @room = Room.find(params[:id])
+    @messages = @room.messages.order(created_at: :asc)
+    if @room.nil?
+      redirect_to rooms_path, notice: "Room not found."
+    end
   end
 
   # GET /rooms/new
@@ -45,6 +51,7 @@ class RoomsController < ApplicationController
       if @room.update(room_params)
         format.html { redirect_to @room, notice: "Room was successfully updated." }
         format.json { render :show, status: :ok, location: @room }
+        format.turbo_stream
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @room.errors, status: :unprocessable_entity }

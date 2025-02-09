@@ -1,6 +1,7 @@
-<%= link_to messages_path(room_id: room.id),
-data: { turbo_frame: 'room-messages' } do %>
+<%= link_to messages_path(room_id: room.id), style:"text-decoration: none;",
+data: { turbo_frame: 'room-messages', action: "click->room#change", room_name: room.name } do %>
 <div class='room'>
     <%= room.name %>
 </div>
 <% end %>
+<%= button_to 'Destroy this room', room, method: :delete, data: { confirm: 'Are you sure?' } %>

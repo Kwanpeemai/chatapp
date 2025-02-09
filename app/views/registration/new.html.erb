@@ -2,8 +2,8 @@
     <div class="form-box">
         <%= tag.div(flash[:alert], class: "alert error") if flash[:alert] %>
         <%= tag.div(flash[:notice], class: "alert success") if flash[:notice] %>
-        <h2>Registration</h2>
-        <p>Welcome back! Please login to your account</p>
+        <h2>CREATE AN ACCOUNT</h2>
+        <p>Already have an account? <%= link_to "Sign in", new_session_path, class: "forgot-password-link" %></p>
 
         <%= form_with url: registration_index_path do |form| %>
         <div>
@@ -16,7 +16,7 @@
         </div>
         <div class="btn-container">
             <%= link_to "Back", new_session_path, class: "btn-back", role: "button" %>
-            <%= button_to "Register", registration_index_path, method: :post, class: "btn-regis" %>
+            <%= button_to "Sign up", registration_index_path, method: :post, class: "btn-regis" %>
         </div>
 
         <% end %>
