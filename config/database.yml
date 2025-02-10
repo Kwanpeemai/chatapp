@@ -25,17 +25,22 @@ test:
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
   primary:
+  #   <<: *default
+  #   database: storage/production.sqlite3
+  # cache:
+  #   <<: *default
+  #   database: storage/production_cache.sqlite3
+  #   migrations_paths: db/cache_migrate
+  # queue:
+  #   <<: *default
+  #   database: storage/production_queue.sqlite3
+  #   migrations_paths: db/queue_migrate
+  # cable:
+  #   <<: *default
+  #   database: storage/production_cable.sqlite3
+  #   migrations_paths: db/cable_migrate
     <<: *default
-    database: storage/production.sqlite3
-  cache:
-    <<: *default
-    database: storage/production_cache.sqlite3
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *default
-    database: storage/production_queue.sqlite3
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *default
-    database: storage/production_cable.sqlite3
-    migrations_paths: db/cable_migrate
+    database: <%= ENV['postgresql://chatapp_postgresql_5g88_user:6qHWXGwBtyDYSo4RK9Q3MFn5y2x4Ad5c@dpg-cukpdpqn91rc73atr9p0-a.oregon-postgres.render.com/chatapp_postgresql_5g88'] %>
+    username: <%= ENV['chatapp_postgresql_5g88_user'] %>
+    password: <%= ENV['6qHWXGwBtyDYSo4RK9Q3MFn5y2x4Ad5c'] %>
+    host: <%= ENV['dpg-cukpdpqn91rc73atr9p0-a'] %>
