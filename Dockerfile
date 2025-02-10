@@ -52,7 +52,7 @@ COPY --from=build /usr/local/bundle /usr/local/bundle
 ENV RAILS_ENV=production
 
 # Run Docker entrypoint script
-ENTRYPOINT ["/myapp/bin/docker-entrypoint"]
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Expose port 3000
 EXPOSE 3000
