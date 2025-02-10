@@ -1,32 +1,35 @@
-# Use the official Ruby image
+# Use official Ruby image
 FROM ruby:3.2
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update -qq && apt-get install -y \
   build-essential \
   libpq-dev \
   nodejs \
   yarn
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Install Bundler
+# Copy Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler -v 2.4.22 && bundle install --jobs 4 --retry 3
 
-# Copy the rest of the application code
+# Install Bundler and gems
+RUN gem install bundler && bundle install --without development test
+
+# Copy the rest of the app
 COPY . .
 
-# Precompile assets (optional, for production)
-RUN bundle exec rails assets:precompile
+# Precompile assets (for faster startup)
+RUN bundle exec rake assets:precompile
 
-# Set environment variables
+# Set environment variables for production
 ENV RAILS_ENV=production
-ENV BUNDLE_WITHOUT="development test"
+ENV RAILS_SERVE_STATIC_FILES=true
+ENV RAILS_LOG_TO_STDOUT=true
 
-# Expose the port
+# Expose port 3000
 EXPOSE 3000
 
-# Start the server
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+# Start the Rails server
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
