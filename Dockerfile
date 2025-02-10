@@ -1,23 +1,61 @@
-# Dockerfile
-# Use the official Ruby image as a base
-FROM ruby:3.0
+FROM ruby:3.3.2-alpine AS build
+WORKDIR /myapp
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+# Set environment variables
+ENV RAILS_ENV=production
 
-# Set the working directory
-WORKDIR /app
+# Install necessary packages to build gems and assets
+RUN apk add --no-cache \
+    build-base \
+    git \
+    tzdata \
+    gcompat \
+    postgresql-client \
+    libpq-dev
 
-# Copy Gemfile and Gemfile.lock to install gems
-COPY Gemfile /app/Gemfile
-COPY Gemfile.lock /app/Gemfile.lock
-RUN bundle install
+# Install only necessary gems and remove extensions
+COPY Gemfile Gemfile.lock ./
 
-# Copy the application code
-COPY . /app
+RUN bundle config set --local without 'development test' && \
+    bundle config --local build.pg --with-pg-config=/usr/bin/pg_config && \
+    bundle install --jobs 8 --retry 3 && \
+    rm -rf /usr/local/bundle/cache/*.gem && \
+    find /usr/local/bundle/gems/ -name "*.c" -delete && \
+    find /usr/local/bundle/gems/ -name "*.o" -delete
 
-# Expose the Rails server port
+
+# Copy application code
+COPY . .
+
+
+# Precompile assets and then remove unnecessary files
+RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile && \
+    rm -rf node_modules tmp/cache vendor/assets test spec
+
+
+FROM ruby:3.3.2-alpine
+WORKDIR /myapp
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    sqlite-libs \
+    tzdata \
+    gcompat \
+    postgresql-client \
+    libpq-dev
+
+# Copy built artifacts from the build stage
+COPY --from=build /myapp /myapp/
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+# Set environment variables
+ENV RAILS_ENV=production
+
+# Run Docker entrypoint script
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+# Expose port 3000
 EXPOSE 3000
 
 # Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
