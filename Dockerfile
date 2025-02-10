@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 # Install only necessary gems and remove extensions
 COPY Gemfile Gemfile.lock ./
 
-RUN bundle config set --local without 'development test' && \
+RUN bundle install && \
     bundle config --local build.pg --with-pg-config=/usr/bin/pg_config && \
     bundle install --jobs 8 --retry 3 && \
     rm -rf /usr/local/bundle/cache/*.gem && \
