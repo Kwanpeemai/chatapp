@@ -65,13 +65,13 @@ http://localhost:3000
 4. ผู้ใช้ 2 คนที่อยู่ในห้องเดียวกันสามารถสนทนาและมองเห็นข้อความกันได้อย่างถูกต้อง
 5. UI ถูกปรับแต่งให้ดูสวยงามและใช้งานง่าย
 
-### Access via Web
+## Access via Web
 
-You can access the app live at:
+คุณเข้าถึง ChatApp Live ได้ที่:
 
 - [ChatApp Live](https://chatapp-lofs.onrender.com)
 
-Log in with:
+ล็อกอินด้วย:
 
 - **Email**: test@gmail.com
 - **Password**: test
