@@ -11,14 +11,20 @@ RUN apt-get update -qq && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy Gemfile and Gemfile.lock
+# Set environment variable to install all gems (including development & test)
+ENV BUNDLE_WITHOUT=""
+
+# Copy Gemfile and Gemfile.lock first (for caching)
 COPY Gemfile Gemfile.lock ./
 
 # Install Bundler and gems
-RUN gem install bundler && bundle install --with development test
+RUN gem install bundler && bundle install
 
 # Copy the rest of the app
 COPY . .
+
+# Ensure bin/rails and other scripts have execute permissions
+RUN chmod +x bin/*
 
 # Precompile assets (for faster startup)
 RUN bundle exec rake assets:precompile
