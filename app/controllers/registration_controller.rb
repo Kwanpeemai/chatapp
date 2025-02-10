@@ -8,7 +8,7 @@ class RegistrationController < ApplicationController
     user = User.new(params.permit(:email_address, :password))
     if  user.save
       start_new_session_for user
-      redirect_to after_authentication_url, notice: "Signed up."
+      redirect_to new_session_path, notice: "Signed up."
     else
       redirect_to new_registration_url(email_address: params[:email_address])
     end
