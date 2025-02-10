@@ -3,6 +3,7 @@ WORKDIR /myapp
 
 # Set environment variables
 ENV RAILS_ENV=production
+ENV BUNDLE_WITHOUT ""
 
 # Install necessary packages to build gems and assets
 RUN apk add --no-cache \
