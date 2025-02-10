@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 # Install only necessary gems and remove extensions
 COPY Gemfile Gemfile.lock ./
 
-RUN bundle install
+RUN bundle config unset without && bundle install
 
 
 # Copy application code
