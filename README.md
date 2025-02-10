@@ -76,3 +76,9 @@ Log in with:
 - **Email**: test@gmail.com
 - **Password**: test
 
+
+### Known Issues
+
+หลังจาก deploy เวอร์ชันที่ได้แล้ว พบปัญหาว่าเมื่อ debug แล้วไม่สามารถ deploy ใหม่ได้  
+ทำให้ยังคงมีบาง **bug** อยู่ และโค้ดอาจยังไม่สมบูรณ์ในบางจุด  
+หากพบปัญหา สามารถแจ้งหรือ contribute ผ่าน repository ได้
