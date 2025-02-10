@@ -36,13 +36,7 @@ rails db:seed
 rails s
 ```
 
-### 6. Start Redis (for ActionCable)
-
-```sh
-redis-server
-```
-
-### 7. Open in Browser
+### 6. Open in Browser
 
 ```
 http://localhost:3000
