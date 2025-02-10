@@ -2,14 +2,6 @@
 
 ChatApp เป็นแอปพลิเคชันแชทที่สร้างด้วย Ruby on Rails รองรับการแชทแบบเรียลไทม์ พร้อมระบบ Authentication และการแสดงชื่อเจ้าของข้อความ
 
-## Features
-
-- **Authentication**: ใช้ Devise สำหรับระบบล็อกอินและลงทะเบียน
-- **User Ownership**: ข้อความแต่ละข้อความจะมีเจ้าของ และแสดงชื่อผู้ส่ง
-- **Real-time Chat**: ใช้ ActionCable สำหรับแสดงข้อความแบบเรียลไทม์
-- **Chat Room Validation**: ตรวจสอบให้แน่ใจว่าผู้ใช้สองคนสามารถสนทนาในห้องเดียวกันและแสดงผลถูกต้อง
-- **UI Styling**: ปรับแต่งหน้าตาให้สวยงามและใช้งานง่ายด้วย Bootstrap หรือ Tailwind CSS
-
 ## Installation
 
 ### 1. Clone Repository
@@ -72,4 +64,15 @@ http://localhost:3000
 3. ข้อความทุกข้อความจะแสดงชื่อเจ้าของด้านหน้า
 4. ผู้ใช้ 2 คนที่อยู่ในห้องเดียวกันสามารถสนทนาและมองเห็นข้อความกันได้อย่างถูกต้อง
 5. UI ถูกปรับแต่งให้ดูสวยงามและใช้งานง่าย
+
+### Access via Web
+
+You can access the app live at:
+
+- [ChatApp Live](https://chatapp-lofs.onrender.com)
+
+Log in with:
+
+- **Email**: test@gmail.com
+- **Password**: test
 
