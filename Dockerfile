@@ -12,13 +12,14 @@ RUN apt-get update -qq && apt-get install -y \
 WORKDIR /app
 
 # Set environment variable to install all gems (including development & test)
-ENV BUNDLE_WITHOUT=""
+ARG BUNDLE_WITHOUT="development test"
+ENV BUNDLE_WITHOUT=${BUNDLE_WITHOUT}
 
 # Copy Gemfile and Gemfile.lock first (for caching)
 COPY Gemfile Gemfile.lock ./
 
 # Install Bundler and gems
-RUN gem install bundler && bundle install
+RUN bundle install --groups development test
 
 # Copy the rest of the app
 COPY . .
