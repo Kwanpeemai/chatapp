@@ -63,7 +63,7 @@ http://localhost:3000
 
 คุณเข้าถึง ChatApp Live ได้ที่:
 
-- [ChatApp Live](https://chatapp-lofs.onrender.com)
+- [ChatApp Live](https://chatapp-lofs.onrender.com/session/new)
 
 ล็อกอินด้วย:
 
