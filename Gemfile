@@ -1,14 +1,13 @@
 source "https://rubygems.org"
 
-gem "pg"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1"
+# # Use sqlite3 as the database for Active Record
+# gem "sqlite3", ">= 2.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -54,6 +53,14 @@ gem "brakeman", require: false
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
 gem "rubocop-rails-omakase", require: false
 # end
+
+group :development, :test do
+  gem "sqlite3", "~> 1.4" # If you're using SQLite in dev/test
+end
+
+group :production do
+  gem "pg" # Ensure PostgreSQL is used in production
+end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
