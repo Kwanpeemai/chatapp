@@ -1,57 +1,32 @@
-FROM ruby:3.3.2-alpine AS build
-WORKDIR /myapp
+# Use the official Ruby image
+FROM ruby:3.2
 
-# Set environment variables
-ENV RAILS_ENV=development
-ENV BUNDLE_WITHOUT ""
+# Install dependencies
+RUN apt-get update -qq && apt-get install -y \
+  build-essential \
+  libpq-dev \
+  nodejs \
+  yarn
 
-# Install necessary packages to build gems and assets
-RUN apk add --no-cache \
-    build-base \
-    git \
-    tzdata \
-    gcompat \
-    postgresql-client \
-    libpq-dev
+# Set the working directory
+WORKDIR /app
 
-# Install only necessary gems and remove extensions
+# Install Bundler
 COPY Gemfile Gemfile.lock ./
+RUN gem install bundler -v 2.4.22 && bundle install --jobs 4 --retry 3
 
-RUN bundle config unset without && bundle install
-
-
-# Copy application code
+# Copy the rest of the application code
 COPY . .
 
-
-# Precompile assets and then remove unnecessary files
-RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile && \
-    rm -rf node_modules tmp/cache vendor/assets test spec
-
-
-FROM ruby:3.3.2-alpine
-WORKDIR /myapp
-
-# Install runtime dependencies
-RUN apk add --no-cache \
-    sqlite-libs \
-    tzdata \
-    gcompat \
-    postgresql-client \
-    libpq-dev
-
-# Copy built artifacts from the build stage
-COPY --from=build /myapp /myapp/
-COPY --from=build /usr/local/bundle /usr/local/bundle
+# Precompile assets (optional, for production)
+RUN bundle exec rails assets:precompile
 
 # Set environment variables
 ENV RAILS_ENV=production
+ENV BUNDLE_WITHOUT="development test"
 
-# Run Docker entrypoint script
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Expose port 3000
+# Expose the port
 EXPOSE 3000
 
-# Start the Rails server
-CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
+# Start the server
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
