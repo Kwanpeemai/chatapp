@@ -7,7 +7,7 @@ gem "rails", "~> 8.0.1"
 gem "propshaft"
 
 # # Use sqlite3 as the database for Active Record
-# gem "sqlite3", ">= 2.1"
+gem "sqlite3", ">= 2.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -54,9 +54,6 @@ gem "brakeman", require: false
 gem "rubocop-rails-omakase", require: false
 # end
 
-group :development, :test do
-  gem "sqlite3", "~> 1.4" # If you're using SQLite in dev/test
-end
 
 group :production do
   gem "pg" # Ensure PostgreSQL is used in production
